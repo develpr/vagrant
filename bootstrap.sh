@@ -39,6 +39,7 @@ sudo sed -i "s/127.0.0.1:9000/\/var\/run\/php5-fpm.sock/g" "/etc/php5/fpm/pool.d
 
 sudo service php5-fpm restart
 sudo a2ensite default
+sudo a2enmod rewrite
 sudo service apache2 restart
 sudo apt-get install libapache2-mod-php5 -y
 sudo apt-get install npm -y
