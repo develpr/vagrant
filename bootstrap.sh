@@ -14,7 +14,7 @@ sudp apt-get install git -y
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password password'
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password password'
 sudo apt-get -y install mysql-server
-sudo apt-get install nginx -y
+sudo apt-get install apache2 -y
 sudo apt-get install php5-mysql -y
 
 
@@ -31,14 +31,16 @@ sudo echo "xdebug.idekey=PHPSTORM" >> /etc/php5/fpm/conf.d/xdebug.ini
 
 curl -sS https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin/composer
-sudo rm -rf /etc/nginx/sites-available
-sudo ln -s /root/sites-available /etc/nginx/sites-available
+sudo rm -rf /etc/apache2/sites-available/
+sudo rm -rf /etc/apache2/sites-enabled/*
+sudo ln -s /root/sites-available /etc/apache2/sites-available
 sudo sed -i "s/127.0.0.1:9000/\/var\/run\/php5-fpm.sock/g" "/etc/php5/fpm/pool.d/www.conf"
 
-# sendfile on causes nginx to not properly serve static files that have changed
-sudo sed -i "s/sendfile on;/sendfile off;/g" "/etc/nginx/nginx.conf"
+
 sudo service php5-fpm restart
-sudo service nginx restart
+sudo a2ensite default
+sudo service apache2 restart
+sudo apt-get install libapache2-mod-php5 -y
 sudo apt-get install npm -y
 sudo apt-get install nodejs -y
 cd /var/www
