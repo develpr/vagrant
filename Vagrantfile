@@ -12,7 +12,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
    config.hostmanager.enabled = true
    config.hostmanager.manage_host = true
-   config.hostmanager.aliases = %w(www.#{$project_name}.dev)
 
   config.vm.hostname = "#{$project_name}.dev"
 
